@@ -1,6 +1,7 @@
 ---
-title: 【原创】 Qin 1s+ 玩机研究
+title: Qin 1s+ 玩机研究
 date: 2019-09-14 15:29:52
+id: '<%= page.date %>'
 tags: 
 - 玩机
 - 多亲
@@ -12,13 +13,13 @@ tags:
 ## 前言
 最近看见了这个多亲1s+按键机，心血来潮弄个玩玩，第三天的下午快递送来了
 ![](Qin-1sp-research/1.jpg)
+<!--more-->
 这玩意开机速度很快，让我想起了AIPC（雾），也没有开机音乐
 ![](Qin-1sp-research/2.jpg)
 比几年前的挪鸡鸭按键机开机快
 ![](Qin-1sp-research/3.jpg)
 进系统设置里看，mocor系统，还行
 ![](Qin-1sp-research/4.jpg)
-<!--more-->
 随便翻翻，有个浏览器
 ![](Qin-1sp-research/5.jpg)
 进去一看我就懵了，这特么的不就是安卓么？

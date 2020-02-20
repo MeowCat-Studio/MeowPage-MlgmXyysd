@@ -1,7 +1,7 @@
 ---
 title: 站点已恢复
 date: 2020-02-20 17:29:05
-top: 5
+top: 1
 id: '<%= page.date %>'
 tags:
 - 公告

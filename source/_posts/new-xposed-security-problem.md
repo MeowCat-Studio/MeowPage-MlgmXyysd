@@ -1,7 +1,6 @@
 ---
 title: Xposed 框架中新的安全问题
 date: 2019-11-02 12:25:43
-top: 2
 id: '<%= page.date %>'
 tags: 
 - Xposed
