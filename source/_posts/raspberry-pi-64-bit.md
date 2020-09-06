@@ -40,3 +40,13 @@ Raspberry Pi 2B | rev1.2 | Broadcom BCM2837, Quad core ARM Cortex-A53 (ARM v8) 6
 ![](raspberry-pi-64-bit/shell.png)
 
 内核已经变成了 aarch64，现在可以运行 arm64 架构的程序了，大功告成！
+
+---
+
+2020.6.1 更新：
+
+树莓派官方已经在5月28日发布2020-05-27版的arm64**测试版**镜像，但实测下来许多软件包都没有适配，期待树莓派真正arm64的那一天
+
+[官方论坛](https://www.raspberrypi.org/forums/viewtopic.php?f=117&t=275370)
+
+[镜像下载](https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2020-05-28/2020-05-27-raspios-buster-arm64.zip)
