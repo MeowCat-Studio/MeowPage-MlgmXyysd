@@ -6,25 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://mlgmxyysd.meowcat.org">
-  <title>找到了合适的 Xposed 框架 | MlgmXyysd 的猫窝</title>
+  <title>Android Device Tree 分区大小计算 | MlgmXyysd 的猫窝</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="最近发现了一个新的（貌似是我火星了）开源 Xposed 框架： Xpatch: 免Root实现App加载Xposed插件的一种方案">
+  <meta name="description" content="首先是 BOARD_FLASH_BLOCK_SIZE，用 BOARD_KERNEL_PAGESIZE 的值乘以 64 即可 其次是众大多分区，我们可以用 dd of&#x3D;&#x2F;dev&#x2F;null if&#x3D;partition 命令来获取大小，但对于大分区来说耗时太长，而且需要root权限 转而一想，为什么不能扒 linux 分区表从而直接获取大小呢">
 <meta property="og:type" content="article">
-<meta property="og:title" content="找到了合适的 Xposed 框架">
-<meta property="og:url" content="http://mlgmxyysd.meowcat.org/2019/12/20/xpatch-found/index.html">
+<meta property="og:title" content="Android Device Tree 分区大小计算">
+<meta property="og:url" content="http://mlgmxyysd.meowcat.org/2021/02/17/android-partition/index.html">
 <meta property="og:site_name" content="MlgmXyysd 的猫窝">
-<meta property="og:description" content="最近发现了一个新的（貌似是我火星了）开源 Xposed 框架： Xpatch: 免Root实现App加载Xposed插件的一种方案">
+<meta property="og:description" content="首先是 BOARD_FLASH_BLOCK_SIZE，用 BOARD_KERNEL_PAGESIZE 的值乘以 64 即可 其次是众大多分区，我们可以用 dd of&#x3D;&#x2F;dev&#x2F;null if&#x3D;partition 命令来获取大小，但对于大分区来说耗时太长，而且需要root权限 转而一想，为什么不能扒 linux 分区表从而直接获取大小呢">
 <meta property="og:locale">
-<meta property="article:published_time" content="2019-12-20T01:07:51.000Z">
-<meta property="article:modified_time" content="2021-02-17T12:21:13.486Z">
+<meta property="article:published_time" content="2021-02-17T03:37:42.000Z">
+<meta property="article:modified_time" content="2021-02-17T12:21:13.485Z">
 <meta property="article:author" content="MlgmXyysd">
 <meta property="article:tag" content="随笔">
 <meta property="article:tag" content="原创">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="技术笔记">
-<meta property="article:tag" content="Xposed">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="MlgmXyysd 的猫窝" type="application/atom+xml">
@@ -215,14 +214,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-xpatch-found" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-android-partition" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      找到了合适的 Xposed 框架
+      Android Device Tree 分区大小计算
     </h1>
   
 
@@ -234,8 +233,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/12/20/xpatch-found/" class="archive-article-date">
-        <time datetime="2019-12-20T01:07:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-20</time>
+<a href="/2021/02/17/android-partition/" class="archive-article-date">
+        <time datetime="2021-02-17T03:37:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-17</time>
 </a>
 
   
@@ -248,7 +247,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">115字</span>
+      <span class="post-count">1k字</span>
     </span>
   </span>
 
@@ -257,7 +256,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">5分</span>
     </span>
   </span>
 </div>
@@ -268,13 +267,22 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>最近发现了一个新的（貌似是我火星了）开源 Xposed 框架：</p>
-<p><a target="_blank" rel="noopener" href="https://windysha.github.io/2019/04/18/Xpatch-%E5%85%8DRoot%E5%AE%9E%E7%8E%B0App%E5%8A%A0%E8%BD%BDXposed%E6%8F%92%E4%BB%B6%E7%9A%84%E4%B8%80%E7%A7%8D%E6%96%B9%E6%A1%88/">Xpatch: 免Root实现App加载Xposed插件的一种方案</a></p>
+    <p>首先是 <code>BOARD_FLASH_BLOCK_SIZE</code>，用 <code>BOARD_KERNEL_PAGESIZE</code> 的值乘以 64 即可</p>
+<p>其次是众大多分区，我们可以用 <code>dd of=/dev/null if=partition</code> 命令来获取大小，但对于大分区来说耗时太长，而且需要root权限</p>
+<p>转而一想，为什么不能扒 linux 分区表从而直接获取大小呢</p>
 <a id="more"></a>
-<p>源码: <a target="_blank" rel="noopener" href="https://github.com/WindySha/Xpatch">https://github.com/WindySha/Xpatch</a></p>
-<p>和众多免 root 的 Xposed 框架原理类似，都是在 App 中插入 Appllication，让 App 在运行时执行加载模块的操作，需要修改 app</p>
-<p>加载模块的源码：<a target="_blank" rel="noopener" href="https://github.com/WindySha/xposed_module_loader">https://github.com/WindySha/xposed_module_loader</a></p>
-<p>这样一来就可以开搞之前说的那个”安全问题”了</p>
+<p>这里以 Huawei Watch 2 LTE 为例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">sawshark:/ $ cat /proc/partitions</span><br><span class="line">major minor  <span class="comment">#blocks  name</span></span><br><span class="line"></span><br><span class="line"> 254        0     262144 zram0</span><br><span class="line"> 179        0    3817472 mmcblk0</span><br><span class="line"> 179        1        512 mmcblk0p1</span><br><span class="line"> 179        2        512 mmcblk0p2</span><br><span class="line"> 179        3        512 mmcblk0p3</span><br><span class="line"> 179        4        512 mmcblk0p4</span><br><span class="line"> 179        5        768 mmcblk0p5</span><br><span class="line"> 179        6        768 mmcblk0p6</span><br><span class="line"> 179        7       5120 mmcblk0p7</span><br><span class="line"> 179        8       5120 mmcblk0p8</span><br><span class="line"> 179        9      10240 mmcblk0p9</span><br><span class="line"> 179       10       5120 mmcblk0p10</span><br><span class="line"> 179       11       4096 mmcblk0p11</span><br><span class="line"> 179       12       4096 mmcblk0p12</span><br><span class="line"> 179       13          1 mmcblk0p13</span><br><span class="line"> 179       14          8 mmcblk0p14</span><br><span class="line"> 179       15       1024 mmcblk0p15</span><br><span class="line"> 179       16      10240 mmcblk0p16</span><br><span class="line"> 179       17        512 mmcblk0p17</span><br><span class="line"> 179       18        512 mmcblk0p18</span><br><span class="line"> 179       19       5120 mmcblk0p19</span><br><span class="line"> 179       20      10240 mmcblk0p20</span><br><span class="line"> 179       21         32 mmcblk0p21</span><br><span class="line"> 179       22       4096 mmcblk0p22</span><br><span class="line"> 179       23       4096 mmcblk0p23</span><br><span class="line"> 179       24        256 mmcblk0p24</span><br><span class="line"> 179       25        256 mmcblk0p25</span><br><span class="line"> 179       26        256 mmcblk0p26</span><br><span class="line"> 179       27        256 mmcblk0p27</span><br><span class="line"> 179       28      10240 mmcblk0p28</span><br><span class="line"> 179       29      32768 mmcblk0p29</span><br><span class="line"> 179       30         16 mmcblk0p30</span><br><span class="line"> 179       31      32768 mmcblk0p31</span><br><span class="line"> 259        0     111568 mmcblk0p32</span><br><span class="line"> 259        1    1048576 mmcblk0p33</span><br><span class="line"> 259        2      65536 mmcblk0p34</span><br><span class="line"> 259        3    2436564 mmcblk0p35</span><br><span class="line"> 179       32        512 mmcblk0rpmb</span><br><span class="line"> 253        0    1032176 dm-0</span><br></pre></td></tr></table></figure>
+<p><code>#blocks</code>为 块设备总块数，每个块是 1024 字节，等同于 KB<br><code>name</code>就是 块设备名称 了，通过列目录可以很方便找到 可读名称 和 块设备名称 的关系</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">sawshark:/ $ ls -l /dev/block/bootdevice/by-name</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 DDR -&gt; /dev/block/mmcblk0p21</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 aboot -&gt; /dev/block/mmcblk0p7</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 abootbak -&gt; /dev/block/mmcblk0p8</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 boot -&gt; /dev/block/mmcblk0p29</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 cache -&gt; /dev/block/mmcblk0p34</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 cmnlib -&gt; /dev/block/mmcblk0p24</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 cmnlibbak -&gt; /dev/block/mmcblk0p25</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 config -&gt; /dev/block/mmcblk0p18</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 devinfo -&gt; /dev/block/mmcblk0p23</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 fsc -&gt; /dev/block/mmcblk0p13</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 fsg -&gt; /dev/block/mmcblk0p22</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 keymaster -&gt; /dev/block/mmcblk0p26</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 keymasterbak -&gt; /dev/block/mmcblk0p27</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 keystore -&gt; /dev/block/mmcblk0p17</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 misc -&gt; /dev/block/mmcblk0p15</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 modem -&gt; /dev/block/mmcblk0p32</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 modemst1 -&gt; /dev/block/mmcblk0p11</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 modemst2 -&gt; /dev/block/mmcblk0p12</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 nfc -&gt; /dev/block/mmcblk0p19</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 nvbin -&gt; /dev/block/mmcblk0p10</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 nvdata -&gt; /dev/block/mmcblk0p9</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 oem -&gt; /dev/block/mmcblk0p28</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 recovery -&gt; /dev/block/mmcblk0p31</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 reserved -&gt; /dev/block/mmcblk0p20</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 rpm -&gt; /dev/block/mmcblk0p3</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 rpmbak -&gt; /dev/block/mmcblk0p4</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 sbl1 -&gt; /dev/block/mmcblk0p1</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 sbl1bak -&gt; /dev/block/mmcblk0p2</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 sec -&gt; /dev/block/mmcblk0p30</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 splash -&gt; /dev/block/mmcblk0p16</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 ssd -&gt; /dev/block/mmcblk0p14</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 system -&gt; /dev/block/mmcblk0p33</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 tz -&gt; /dev/block/mmcblk0p5</span><br><span class="line">lrwxrwxrwx 1 root root 20 1970-01-13 18:59 tzbak -&gt; /dev/block/mmcblk0p6</span><br><span class="line">lrwxrwxrwx 1 root root 21 1970-01-13 18:59 userdata -&gt; /dev/block/mmcblk0p35</span><br></pre></td></tr></table></figure>
+<p>综合以上，用awk套娃一个自动化脚本</p>
+<p>安卓设备默认是不带awk的，所以需要通过电脑套娃</p>
+<p>这里以wsl运行环境为例，如果不是wsl自行更改<code>call_cat</code>和<code>call_ls</code>两个变量即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">call_cat=<span class="string">&quot;adb.exe shell cat&quot;</span> <span class="comment"># cat命令</span></span><br><span class="line">call_ls=<span class="string">&quot;adb.exe shell ls&quot;</span> <span class="comment"># ls命令</span></span><br><span class="line">name_base=<span class="string">&quot;/dev/block/bootdevice&quot;</span> <span class="comment"># by-name的上级目录，一般不用动</span></span><br><span class="line"><span class="keyword">if</span> [[ -n <span class="variable">$1</span> ]]; <span class="keyword">then</span></span><br><span class="line">  block_name=$(<span class="variable">$&#123;call_ls&#125;</span> -la <span class="variable">$&#123;name_base&#125;</span>/by-name/<span class="variable">$1</span> 2&gt;/dev/null | awk -F <span class="string">&quot; -&gt; /dev/block/&quot;</span> <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>) <span class="comment"># 将 分区可读名称 转换为 块设备名称</span></span><br><span class="line">  <span class="keyword">if</span> [[ -n <span class="variable">$&#123;block_name&#125;</span> ]]; <span class="keyword">then</span></span><br><span class="line">	<span class="variable">$&#123;call_cat&#125;</span> /proc/partitions | grep <span class="variable">$&#123;block_name&#125;</span> | awk -F <span class="string">&quot; &quot;</span> <span class="string">&#x27;&#123;print $3 * 1024&#125;&#x27;</span> <span class="comment"># 输出单位为 Byte</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Error: partition <span class="variable">$1</span> not found&quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;Usage: <span class="variable">$0</span> [partition name]&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>运行测试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mlgmxyysd@MlgmXyysd-NUC:~$ ./partitions.sh</span><br><span class="line">Usage: ./partitions.sh [partition name]</span><br><span class="line">mlgmxyysd@MlgmXyysd-NUC:~$ ./partitions.sh non_exist_partition</span><br><span class="line">Error: partition non_exist_partition not found</span><br><span class="line">mlgmxyysd@MlgmXyysd-NUC:~$ ./partitions.sh system</span><br><span class="line">1073741824</span><br></pre></td></tr></table></figure>
+<p>与上方输出计算结果一致，成功</p>
+<p>感谢：<a target="_blank" rel="noopener" href="https://blog.779.moe/archives/7/">TH779</a></p>
 
     
 
@@ -327,7 +335,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://mlgmxyysd.meowcat.org/2019/12/20/xpatch-found/" title="找到了合适的 Xposed 框架" target="_blank">http://mlgmxyysd.meowcat.org/2019/12/20/xpatch-found/</a>
+          <a href="http://mlgmxyysd.meowcat.org/2021/02/17/android-partition/" title="Android Device Tree 分区大小计算" target="_blank">http://mlgmxyysd.meowcat.org/2021/02/17/android-partition/</a>
         </li>
         
         <li>
@@ -362,10 +370,6 @@
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Xposed</a>
         		</li>
       		
 		</ul>
@@ -421,7 +425,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://mlgmxyysd.meowcat.org/2019/12/20/xpatch-found/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://mlgmxyysd.meowcat.org/2021/02/17/android-partition/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -436,18 +440,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/12/28/xposed-modules-activation-scope/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          浅谈 Xposed 新概念 [模块作用域]
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/11/02/new-xposed-security-problem/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Xposed 框架中新的安全问题</div>
+    <a href="/2020/12/31/the-ending-2020/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">The Ending 2020</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -501,9 +496,9 @@
     <script src="/lib/gitment.js"></script>
   
   <script>
-    <!-- id: "找到了合适的 Xposed 框架" -->
+    <!-- id: "Android Device Tree 分区大小计算" -->
     var gitment = new Gitment({
-      id: "20191220090751",
+      id: "20210217113742",
       owner: 'MlgmXyysd',
       repo: 'Comment-Issues',
       oauth: {
