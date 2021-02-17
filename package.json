@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "go": "git add . && git stash && git pull && git stash pop && hexo clean && hexo g -f -d && hexo clean && git add . && git commit -m \"Initial commit\" && git push -f",
+    "gitpop": "git add . && git stash && git pull && git stash pop",
+	"go": "hexo clean && hexo g -f -d && hexo clean && git add . && git commit -m \"Initial commit\" && git push -f",
     "server": "hexo server",
     "new": "hexo new post",
     "clean": "hexo clean",
