@@ -16,7 +16,7 @@ Android 源码非常大，并且因为一些众所周知的原因，下载速度
 
 xref 网站的搜索功能极其垃圾，在打开比较大的源码文件时还经常会卡死浏览器
 
-<!--more-->
+<!-- more -->
 Google 终于在去年年底推出了官方的代码查阅平台：[Android Code Search](https://cs.android.com/) (梯)
 
 ![](android-code-search-google/cs.png)

@@ -12,7 +12,7 @@ tags:
 ![](raspberry-pi-64-bit/pi.png)
 
 但是，32 位的 Raspbian 系统严重拖了 Raspberry Pi 4B 的后腿
-<!--more-->
+<!-- more -->
 实际上，官方已经在最新的 Raspbian 上更新了 arm64 的内核，如果你的型号在下面的表格中，都可以使用 armv8(arm64) 的内核来提升性能
 
 型号 | 版本 | 处理器
