@@ -133,7 +133,11 @@ mlgmxyysd@MlgmXyysd-NUC:~$ ./partitions.sh system
 与上方输出计算结果一致，成功
 
 
-更新：其实还有一种更简单的方式，就是可能不如上面这种靠谱
+更新：上面的方式在一些设备中可能会被SELinux挡掉
+
+其实还有一种更简单的方式
+
+重启设备至`fastboot`或`bootloader`模式
 ```bash
 fastboot getvar partition-size:[partition name]
 ```
