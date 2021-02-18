@@ -133,4 +133,17 @@ mlgmxyysd@MlgmXyysd-NUC:~$ ./partitions.sh system
 与上方输出计算结果一致，成功
 
 
+更新：其实还有一种更简单的方式，就是可能不如上面这种靠谱
+```bash
+fastboot getvar partition-size:[partition name]
+```
+例如：
+```bash
+mlgmxyysd@MlgmXyysd-NUC:~$ fastboot.exe getvar partition-size:system
+partition-size:system:   0x40000000
+Finished. Total time: 0.116s
+```
+返回值转换为 DEC 为 1073741824 ，单位为 Byte
+
+
 感谢：[TH779](https://blog.779.moe/archives/7/)
