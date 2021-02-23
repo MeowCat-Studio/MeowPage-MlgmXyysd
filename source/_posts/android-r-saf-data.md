@@ -19,3 +19,5 @@ Intent intent = new Intent("android.intent.action.OPEN_DOCUMENT_TREE");
 intent.putExtra("android.provider.extra.INITIAL_URI", Uri.parse("content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fobb/document/primary%3AAndroid%2Fobb"));
 startActivityForResult(intent, SOME_RESULT_CODE);
 ```
+
+完整代码：[GitHub@SAFTest](https://github.com/MlgmXyysd/SAFTest)
