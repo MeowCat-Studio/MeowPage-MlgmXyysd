@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mlgmxyysd.meowcat.org/"/>
-  <updated>2021-02-17T16:21:37.745Z</updated>
+  <updated>2021-02-23T04:07:29.167Z</updated>
   <id>http://mlgmxyysd.meowcat.org/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://mlgmxyysd.meowcat.org/2021/02/18/android-r-saf-data/"/>
     <id>http://mlgmxyysd.meowcat.org/2021/02/18/android-r-saf-data/</id>
     <published>2021-02-17T16:17:51.000Z</published>
-    <updated>2021-02-17T16:21:37.745Z</updated>
+    <updated>2021-02-23T04:07:29.167Z</updated>
     
-    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">&quot;android.intent.action.OPEN_DOCUMENT_TREE&quot;</span>);</span><br><span class="line">intent.putExtra(<span class="string">&quot;android.provider.extra.INITIAL_URI&quot;</span>, Uri.parse(<span class="string">&quot;content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata/document/primary%3AAndroid%2Fdata&quot;</span>));</span><br><span class="line">startActivityForResult(intent, SOME_RESULT_CODE);</span><br></pre></td></tr></table></figure><p>访问<code>obb</code>同理</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">&quot;android.intent.action.OPEN_DOCUMENT_TREE&quot;</span>);</span><br><span class="line">intent.putExtra(<span class="string">&quot;android.provider.extra.INITIAL_URI&quot;</span>, Uri.parse(<span class="string">&quot;content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fobb/document/primary%3AAndroid%2Fobb&quot;</span>));</span><br><span class="line">startActivityForResult(intent, SOME_RESULT_CODE);</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">&quot;android.intent.action.OPEN_DOCUMENT_TREE&quot;</span>);</span><br><span class="line">intent.putExtra(<span class="string">&quot;android.provider.extra.INITIAL_URI&quot;</span>, Uri.parse(<span class="string">&quot;content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata/document/primary%3AAndroid%2Fdata&quot;</span>));</span><br><span class="line">startActivityForResult(intent, SOME_RESULT_CODE);</span><br></pre></td></tr></table></figure><p>访问<code>obb</code>同理</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">&quot;android.intent.action.OPEN_DOCUMENT_TREE&quot;</span>);</span><br><span class="line">intent.putExtra(<span class="string">&quot;android.provider.extra.INITIAL_URI&quot;</span>, Uri.parse(<span class="string">&quot;content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fobb/document/primary%3AAndroid%2Fobb&quot;</span>));</span><br><span class="line">startActivityForResult(intent, SOME_RESULT_CODE);</span><br></pre></td></tr></table></figure><p>完整代码：<a href="https://github.com/MlgmXyysd/SAFTest">GitHub@SAFTest</a></p>]]></content>
     
     <summary type="html">
     

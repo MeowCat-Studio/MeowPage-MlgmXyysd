@@ -18,7 +18,7 @@
 <meta property="og:description" content="123Intent intent &#x3D; new Intent(&quot;android.intent.action.OPEN_DOCUMENT_TREE&quot;);intent.putExtra(&quot;android.provider.extra.INITIAL_URI&quot;, Uri.parse(&quot;content:&#x2F;&#x2F;com.android.externalstorag">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-02-17T16:17:51.000Z">
-<meta property="article:modified_time" content="2021-02-17T16:21:37.745Z">
+<meta property="article:modified_time" content="2021-02-23T04:07:29.167Z">
 <meta property="article:author" content="MlgmXyysd">
 <meta property="article:tag" content="随笔">
 <meta property="article:tag" content="原创">
@@ -247,7 +247,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">81字</span>
+      <span class="post-count">87字</span>
     </span>
   </span>
 
@@ -270,6 +270,9 @@
     <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">&quot;android.intent.action.OPEN_DOCUMENT_TREE&quot;</span>);</span><br><span class="line">intent.putExtra(<span class="string">&quot;android.provider.extra.INITIAL_URI&quot;</span>, Uri.parse(<span class="string">&quot;content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fdata/document/primary%3AAndroid%2Fdata&quot;</span>));</span><br><span class="line">startActivityForResult(intent, SOME_RESULT_CODE);</span><br></pre></td></tr></table></figure>
 <p>访问<code>obb</code>同理</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="string">&quot;android.intent.action.OPEN_DOCUMENT_TREE&quot;</span>);</span><br><span class="line">intent.putExtra(<span class="string">&quot;android.provider.extra.INITIAL_URI&quot;</span>, Uri.parse(<span class="string">&quot;content://com.android.externalstorage.documents/tree/primary%3AAndroid%2Fobb/document/primary%3AAndroid%2Fobb&quot;</span>));</span><br><span class="line">startActivityForResult(intent, SOME_RESULT_CODE);</span><br></pre></td></tr></table></figure>
+
+<p>完整代码：<a target="_blank" rel="noopener" href="https://github.com/MlgmXyysd/SAFTest">GitHub@SAFTest</a></p>
+
     
 
     
